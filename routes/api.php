@@ -20,3 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResource('/users', "API\UsersController");
 Route::apiResource('/hobbies', "API\HobbiesController");
 Route::get('/fetch/hobbies', 'API\HobbiesController@fetch');
+
+Route::post('/login', 'Auth\LoginController@login');
+Route::post('/register', 'Auth\RegisterController@register');
