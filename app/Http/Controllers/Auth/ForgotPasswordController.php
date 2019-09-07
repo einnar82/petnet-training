@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\ResetPasswordNotification;
+use App\User;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ForgotPasswordController extends Controller
 {
@@ -28,5 +32,19 @@ class ForgotPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    public function sendResetLinkEmail(Request $request)
+    {
+        $this->validateEmail($request);
+        $user = User::whereEmail($request->email)->firstOrFail();
+        \DB::insert('insert into password_resets (email, token) values (?, ?)', [$request->email, Str::random(10)]);
+        $code = \DB::table('password_resets')->where('email', $request->email)->get(['token']);
+        $user->notify(new ResetPasswordNotification($code[0], $user));
+    }
+
+    protected function broker()
+    {
+        return Password::broker();
     }
 }

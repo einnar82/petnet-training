@@ -49,4 +49,13 @@ class LoginController extends Controller
         }
         return response()->json(['message' => 'invalid credentials!'], 422);
     }
+
+    /**
+     * Override logout behavior
+     */
+    public function logout(Request $request)
+    {
+        auth('api')->logout();
+        return response()->json(['message' => 'successfully logout!']);
+    }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,8 +14,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth:api']], function () {
+    Route::get('/current-user', 'API\DataController@user');
 });
 
 Route::apiResource('/users', "API\UsersController");
@@ -22,4 +23,7 @@ Route::apiResource('/hobbies', "API\HobbiesController");
 Route::get('/fetch/hobbies', 'API\HobbiesController@fetch');
 
 Route::post('/login', 'Auth\LoginController@login');
+Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::post('/register', 'Auth\RegisterController@register');
+Route::post('/verify/user', 'API\VerifyUserController@verify');
+Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');

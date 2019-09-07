@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use App\Jobs\API\SendConfirmationEmailJob;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -67,6 +69,7 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'code' => Str::random(8),
             'password' => Hash::make($data['password']),
         ]);
     }
@@ -77,8 +80,11 @@ class RegisterController extends Controller
 
         // event(new Registered($user = $this->create($request->all())));
         $user = $this->create($request->all());
+        if ($user) {
+            dispatch(new SendConfirmationEmailJob($user));
+            return response()->json(['message' => 'successfully registered!']);
+        }
         // $this->guard()->login($user);
 
-        return response()->json(['message' => 'successfully registered!']);
     }
 }
