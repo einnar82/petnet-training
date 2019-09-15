@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Cache\CachableResponses;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -15,7 +16,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return User::all(['name', 'email']);
+        return (new CachableResponses(User::all(['name', 'email']), 'users', 10))->cache();
     }
 
     /**
