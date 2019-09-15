@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\PasswordReset;
 use App\Notifications\ResetPasswordNotification;
 use App\User;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
@@ -37,9 +38,11 @@ class ForgotPasswordController extends Controller
     public function sendResetLinkEmail(Request $request)
     {
         $this->validateEmail($request);
-        $this->broker()->sendResetLink(
-            $this->credentials($request)
-        );
-        return response()->json(['message' => 'ok']);
+        $user = User::whereEmail($request->email)->firstOrFail();
+        //set password token to db
+        $token = (new PasswordReset)->createToken($request->email);
+        //send notification via email
+        $user->sendPasswordResetNotification($token);
+        return response()->json(['message' => 'The code has been sent to your email, please check!']);
     }
 }
