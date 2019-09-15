@@ -16,6 +16,9 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/current-user', 'API\DataController@user');
+    Route::post('/test-notification', 'API\NotificationsController@notify');
+    Route::get('/notifications', 'API\NotificationsController@all');
+    Route::get('/mark-notifications', 'API\NotificationsController@read');
 });
 
 Route::apiResource('/users', "API\UsersController");
