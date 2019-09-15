@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/mark-notifications', 'API\NotificationsController@read');
     Route::post('/upload', 'API\StorageController@put');
     Route::get('/get-upload', 'API\StorageController@get');
+    Route::post('/logged-user', 'API\EventsController@send');
 });
 
 Route::apiResource('/users', "API\UsersController");
