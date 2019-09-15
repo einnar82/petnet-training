@@ -27,3 +27,4 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::post('/register', 'Auth\RegisterController@register');
 Route::post('/verify/user', 'API\VerifyUserController@verify');
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::post('/password/reset', 'Auth\ResetPasswordController@reset');
