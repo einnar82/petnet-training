@@ -12,14 +12,15 @@ class ResetPassword extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
+    public $code;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user, $code)
+    public function __construct($code)
     {
-        $this->user = $user;
         $this->code = $code;
     }
 

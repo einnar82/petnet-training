@@ -13,16 +13,15 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $user, $code, $tries = 3;
+    public $code, $tries = 3;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($code, User $user)
+    public function __construct($code)
     {
-        $this->user = $user;
         $this->code = $code;
     }
 
@@ -45,9 +44,9 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        return (new Mailable($this->user, $this->code))
-            ->to($this->user->email)
-            ->markdown('emails.reset', ['user' => $this->user, 'token' => $this->code]);
+        return (new Mailable($this->code))
+            ->to($notifiable->getEmailForPasswordReset())
+            ->markdown('emails.reset', ['token' => $this->code]);
     }
 
     /**

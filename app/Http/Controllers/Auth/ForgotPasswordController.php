@@ -37,14 +37,9 @@ class ForgotPasswordController extends Controller
     public function sendResetLinkEmail(Request $request)
     {
         $this->validateEmail($request);
-        $user = User::whereEmail($request->email)->firstOrFail();
-        \DB::insert('insert into password_resets (email, token) values (?, ?)', [$request->email, Str::random(10)]);
-        $code = \DB::table('password_resets')->where('email', $request->email)->get(['token']);
-        $user->notify(new ResetPasswordNotification($code[0], $user));
-    }
-
-    protected function broker()
-    {
-        return Password::broker();
+        $this->broker()->sendResetLink(
+            $this->credentials($request)
+        );
+        return response()->json(['message' => 'ok']);
     }
 }
