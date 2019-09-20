@@ -3,4 +3,5 @@
 
 Your reset password code is {{$code}}
 
+
 @endcomponent

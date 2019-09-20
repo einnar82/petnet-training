@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\ResetPasswordRequest;
 use App\Models\PasswordReset;
 use App\User;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -40,10 +41,8 @@ class ResetPasswordController extends Controller
         $this->middleware('guest');
     }
 
-    public function reset(Request $request)
+    public function reset(ResetPasswordRequest $request)
     {
-        $request->validate($this->rules(), $this->validationErrorMessages());
-
         User::whereEmail($request->email)->firstOrFail()->update([
             'password' => \Hash::make($request->password)
         ]);

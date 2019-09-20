@@ -12,3 +12,11 @@ Code Snippet samples included
 4. Queues
 5. Mailables
 6. MVC Basics
+
+Instructions: 
+
+
+$ composer install
+$ php artisan migrate
+$ php artisan jwt:secret
+

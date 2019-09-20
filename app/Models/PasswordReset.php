@@ -25,4 +25,10 @@ class PasswordReset extends Model
     {
         return $query->whereEmail($email)->delete();
     }
+
+
+    public function scopeHaveTokens($query, $token, $email)
+    {
+        return $query->whereToken($token)->whereEmail($email)->exists();
+    }
 }
