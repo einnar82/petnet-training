@@ -14,12 +14,12 @@ class StorageController extends Controller
         $filename = Str::random(100);
         $fileExtension = $request->image->getClientOriginalExtension();
         $fullFileName = "$filename.$fileExtension";
-        // return \Storage::disk('users')->put("/", $request->image);
-        return \Storage::disk('users')->putFileAs('/', new File($request->image), $fullFileName);
+        return \Storage::disk('users')->put("/", $request->image);
+        // return \Storage::disk('users')->putFileAs('/', new File($request->image), $fullFileName);
     }
 
     public function get()
     {
-        return \Storage::disk('users')->get('3NbpiQ3gsC62FYYqpPv1aipvWVKiYjmhuT4S0Ztr.png');
+        return \Storage::disk('users')->download('ipqc3w4hqneCEB0FRElb1SfBEZWI37LyatDUnbB6ZcwdoeLBxQyJKeWrSDLGLZRj0P8kJLcRkObLkdzXuoiMqZ7uE6ChRRne8cUe.png');
     }
 }
