@@ -1,0 +1,27 @@
+Web App
+
+- Authentication
+- CRUD - Products
+- CRUD - Categories
+- Retrive all products of a certain category
+- retrive all categories with products
+
+
+raymar - team lalagon
+kenneth
+
+
+sonny - team bravo
+karl
+
+
+elaiza - team lalavel
+lala
+
+
+chester - team alpha
+mj
+
+
+jerika - team sisterakas
+christian
