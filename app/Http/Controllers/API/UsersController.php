@@ -16,7 +16,23 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return (new CachableResponses(User::all(['name', 'email']), 'users', 10))->cache();
+        // \DB::connection()->enableQueryLog();
+
+        // $queries = \DB::getQueryLog();
+        // \Log::debug($queries);
+        // return (new CachableResponses(User::all(), 'users', 10))->cache();
+        // return \Cache::get('users');
+        // return \Cache::remember('users', 60, function () {
+        //     return \DB::table('users')->get();
+        // });
+        // \Cache::put('users', User::all(), 60);
+        // return \Cache::get('users');
+        return \Cache::remember('users', 60, function () {
+            return User::all();
+        });
+
+        // return User::all();
+        // \Cache::flush();
     }
 
     /**

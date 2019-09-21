@@ -12,6 +12,11 @@ class UserObserver
      * @param  \App\User  $user
      * @return void
      */
+    public function creating(User $user)
+    {
+        \Log::info('creating something...');
+    }
+
     public function created(User $user)
     {
         \Log::info('created user', ['user' => $user]);
